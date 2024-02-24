@@ -1,0 +1,73 @@
+type Query {
+    products: [Product!]!
+    materials: [Material!]!
+}
+
+
+interface Persisted {
+    id: ID!
+    createdOn: DateTime!
+    updatedOn: DateTime!
+}
+
+interface Describable {
+    name: String!
+    description: String!
+}
+
+type Product implements Persisted & Describable{
+    material: Material!
+
+    # Persisted
+    id: ID!
+    createdOn: DateTime!
+    updatedOn: DateTime!
+
+    # Describable
+    name: String!
+    description: String!
+}
+type Material implements Persisted & Describable{
+    # Persisted
+    id: ID!
+    createdOn: DateTime!
+    updatedOn: DateTime!
+
+    # Describable
+    name: String!
+    description: String!
+}
+
+type Mutation {
+    createProduct(in: ProductCreateIn!): Product!
+    updateProduct(
+        id: ID! @Exists,
+        update: ProductUpdateIn!
+    ): Product!
+
+    deleteProducts(
+        ids: [ID!]! @Exists(name: "Product"),
+    ): DeletionResult!
+    createMaterial(in: MaterialCreateIn!): Material!
+}
+
+input ProductCreateIn{
+    name: String!
+    description: String!
+    material: MaterialInput!
+}
+input MaterialInput @oneOf {
+    id: ID @Exists
+    new: MaterialCreateIn
+}
+input MaterialCreateIn {
+    name: String! @NotEmpty
+    description: String!
+}
+input ProductUpdateIn{
+    name: String! @NotEmpty
+    description: String!
+}
+
+
+

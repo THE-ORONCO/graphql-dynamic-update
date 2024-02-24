@@ -1,0 +1,10 @@
+extend type Mutation {
+    partialUpdateProduct(
+        id: ID! @Exists(domainClass: "the.oronco.graphqldynamicupdate.codegen.types.Product"), ,
+        update: PartialProductUpdateIn!): Product!
+}
+
+input PartialProductUpdateIn{
+    name: String @NotEmpty
+    description: String
+}

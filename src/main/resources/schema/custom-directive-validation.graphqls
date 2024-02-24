@@ -1,0 +1,6 @@
+
+directive @Exists(
+    domainClass: String,
+    name: String,
+    message: String,
+) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION

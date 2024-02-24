@@ -1,0 +1,13 @@
+
+union DeletionResult = DeletionSuccess | Failure
+type DeletionSuccess {
+    idsDeleted: [ID!]!
+}
+type Failure {
+    message: String!
+    kind: FailureType!
+}
+enum FailureType {
+    Missing
+    ReferencedByOther
+}
